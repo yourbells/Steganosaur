@@ -1,0 +1,116 @@
+{% extends 'video.html' %}
+{% block title %} STEGANOSAUR | Video-Encode {% endblock %}
+{% block content %}
+<div class="jumbotron jumbotron-fluid mx-auto my-4 rounded-lg" style="display: table; padding: 2rem;">
+    <div class="container">
+        <h1 class="display-4 text-monospace">PENYISIPAN PESAN</h1>
+        <hr>
+        <!--Form start-->
+        <form action="/video/encode-result" method="POST" enctype="multipart/form-data" id="encodeForm">
+            <div class="form-group">
+                <label for="exampleFormControlFile1">📺 Pilih Video Anda:</label>
+                <input type="file" name="video" accept="video/*" class="form-control-file" id="exampleFormControlFile1" required>
+                <br>
+                <label for="exampleFormControlFile1">Pilih Kunci Caesar</label>
+                <select name="caesar_shift" id="caesar_shift" class="form-control" required>
+                    <option style="display: none;">Pilih Kunci</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                    <option value="11">11</option>
+                    <option value="12">12</option>
+                    <option value="13">13</option>
+                    <option value="14">14</option>
+                    <option value="15">15</option>
+                    <option value="16">16</option>
+                    <option value="17">17</option>
+                    <option value="18">18</option>
+                    <option value="19">19</option>
+                    <option value="20">20</option>
+                    <option value="21">21</option>
+                    <option value="22">22</option>
+                    <option value="23">23</option>
+                    <option value="24">24</option>
+                    <option value="25">25</option>
+                    <option value="26">26</option>
+                </select>
+                <!-- <label for="exampleFormControlFile1">Kunci Caesar:</label>
+                <input type="number" name="caesar_shift" id="caesar_shift" class="form-control-file" value="3" required> -->
+                <br>
+                <label for="exampleFormControlFile1">📃 Masukkan Pesan Anda:</label>
+                <textarea class="form-control" rows="4" name="message" id="message" required></textarea>
+                <div id="charCount">0 / 255 Karakter</div>              
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+        <!--Form end-->
+        <!-- Loading animation -->
+        <div id="loading-overlay">
+            <div id="loading-spinner"></div>
+        </div>
+        <style>
+            #loading-overlay {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: rgba(255, 255, 255, 0.8);
+                z-index: 9999;
+            }
+
+            #loading-spinner {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                border: 5px solid #f3f3f3;
+                border-top: 5px solid #3498db;
+                border-radius: 50%;
+                width: 50px;
+                height: 50px;
+                animation: spin 1s linear infinite;
+            }
+
+            @keyframes spin {
+                0% { transform: translate(-50%, -50%) rotate(0deg); }
+                100% { transform: translate(-50%, -50%) rotate(360deg); }
+            }
+        </style>
+        <script>
+            // Mendapatkan elemen textarea
+            var textarea = document.getElementById('message');
+
+            // Mendapatkan elemen untuk menampilkan jumlah karakter
+            var charCount = document.getElementById('charCount');
+
+            // Menambahkan event listener untuk menghitung karakter saat pengguna mengetik
+            textarea.addEventListener('input', function() {
+                var textLength = textarea.value.length;
+                charCount.textContent = textLength + ' / 255 characters';
+
+                // Jika jumlah karakter melebihi 255, potong teksnya
+                if (textLength > 255) {
+                    textarea.value = textarea.value.substring(0, 255);
+                    charCount.textContent = '255 / 255 characters';
+                }
+            });
+
+            document.addEventListener('DOMContentLoaded', function() {
+                document.getElementById('encodeForm').addEventListener('submit', function() {
+                    document.getElementById('loading-overlay').style.display = 'block';
+                });
+            });
+        </script>
+        <!-- End loading animation -->
+    </div>
+</div>
+{% endblock %}

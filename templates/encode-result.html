@@ -1,0 +1,61 @@
+{% extends 'video.html' %}
+{% block title %} STEGANOSAUR | Video-Encode {% endblock %}
+{% block content %}
+<div class="jumbotron jumbotron-fluid mx-auto my-5 rounded-lg" style="display: table; padding: 3rem;">
+    <div class="container">
+        <h1 class="display-4 text-monospace">HASIL PENYISIPAN</h1>
+        <div class="card bg-light">
+            <div class="container-fluid">
+                <!-- {% for key, value in result.items() %}
+                    {% if value %}
+                        <p> {{ value }}</p>
+                    {% else %}
+                        <p> No message selected </p>
+                    {% endif %}
+                {% endfor %} -->
+
+                {% if file %}
+                    <!-- <h5 class="my-2">
+                        Your Video:
+                    </h5>
+                    <video width="320" height="240" controls class="mb-2">
+                        <source src="../static/{{ file.filename }}" type="video/avi">
+                    </video> -->
+                {% else %}
+                    <p> Tidak Ada Video Yang Dipilih</p>
+                    <br>
+                {% endif %}
+                {% if message %}
+                    <h5 class="my-2">
+                        Pesan Yang Disembunyikan:
+                    </h5>
+                    <div class="card mb-2">
+                        <div class="card-body">
+                        {{ message }}
+                        </div>
+                    </div>
+                {% else %}
+                    <p>No message recorded.</p>
+                {% endif %}
+                    <hr>
+                {% if encryption %}
+                    <h5 class="my-2">
+                        Video Hasil:
+                    </h5>
+
+                    <div class="col">
+                        <!-- <img class="row mb-1" src="static/encrypted_video_image.png" style="width:100px; height:100px"/> -->
+                        <a class="btn btn-dark btn-sm row" href="{{ url_for('static', filename=file) }}" download>Download</a>
+                    </div>
+                {% else %}
+                    <p> No </p>
+                {% endif %}
+                <hr>
+                <div>
+                    <a class="btn btn-primary my-2" href="/">Done</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>    
+{% endblock %}

@@ -1,0 +1,60 @@
+{% extends 'video.html' %}
+{% block title %} STEGANOSAUR | Audio-Decode {% endblock %}
+{% block content %}
+<div class="jumbotron jumbotron-fluid mx-auto my-5 rounded-lg" style="display: table; padding: 3rem;">
+    <div class="container">
+        <h1>HASIL PENGAMBILAN PESAN</h1>
+        <div class="card bg-light">
+            <div class="container-fluid">
+
+                {% if file %}
+                    <!-- <img src="static/{{ file.filename }}" style="width:100px; height:100px" /> -->
+                {% else %}
+                    <p> No audio selected</p>
+                {% endif %}
+
+                {% if decryption %}
+                <h5 class="mt-3 mb-3">
+                    Pesan Tersembunyi:
+                </h5>
+                    <div>
+                        <div >
+                            <button class="btn btn-dark btn-sm" onclick="copyClipboard()">📋 Copy text</button>
+                        </div>
+                        <div class="card mb-1">
+                            <div class="card-body" id="divClipboard">
+                            {{ decrypytedText }}
+                            </div>
+                        </div>
+                    </div>
+                {% else %}
+                    <p> No </p>
+                    <br>
+                {% endif %}
+                <div>
+                    <a class="btn btn-primary my-3" href="/">Done</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>    
+    <script>
+        function copyClipboard() {
+        var elm = document.getElementById("divClipboard");
+        if(document.body.createTextRange) {
+            var range = document.body.createTextRange();
+            range.moveToElementText(elm);
+            range.select();
+            document.execCommand("Copy");
+        }
+        else if(window.getSelection) {
+            var selection = window.getSelection();
+            var range = document.createRange();
+            range.selectNodeContents(elm);
+            selection.removeAllRanges();
+            selection.addRange(range);
+            document.execCommand("Copy");
+        }
+        }
+    </script>
+{% endblock %}
